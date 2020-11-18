@@ -53,9 +53,7 @@ def main():
         patch_pattern = flags['--patch-tag-pattern'] or '*'
         if flags["lead-time"]:
             mean_seconds = calculate_lead_time(path_to_git_repo, deploy_pattern, start_date)
-            print(f"Avarage lead time: {mean_seconds:.0f} seconds")
-            print(f"Avarage lead time: {(mean_seconds / 3600):.0f} hours")
-            print(f"Avarage lead time: {(mean_seconds / 86400):.0f} days")
+            print(mean_seconds)
         if flags["deploy-interval"]:
             interval_seconds = calculate_deploy_interval(path_to_git_repo, deploy_pattern, start_date, now)
             print(f"Deploy interval: {interval_seconds:.0f} seconds")
