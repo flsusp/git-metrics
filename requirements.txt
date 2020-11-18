@@ -1,6 +1,5 @@
 pytest
 docopt
-matplotlib
 pandas
 requests
 gitpython

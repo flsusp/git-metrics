@@ -9,3 +9,5 @@ __pycache__
 
 # Exclude meta files
 *META-INF/
+
+venv/

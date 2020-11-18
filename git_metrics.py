@@ -23,11 +23,9 @@ import os
 import docopt
 import sys
 
-from git_metrics_open_branches import plot_open_branches_metrics
 from git_metrics_open_branches import get_branches
 from git_metrics_open_branches import commit_author_time_and_branch_ref
 from git_metrics_release_lead_time import commit_author_time_tag_author_time_and_from_to_tag_name
-from git_metrics_release_lead_time import plot_release_lead_time_metrics
 from process import mk_run
 
 
@@ -67,10 +65,7 @@ def main():
             assert_master_branch(run, master_branch)
             gen = commit_author_time_and_branch_ref(run, master_branch)
             data = ((now, t, b, repo_name) for t, b in gen)
-            if flags['--plot']:
-                plot_open_branches_metrics(data)
-            else:
-                write_open_branches_csv_file(data)
+            write_open_branches_csv_file(data)
         elif flags["release-lead-time"]:
             earliest_date = int(flags["--earliest-date"] or 0)
             pattern = flags['--tag-pattern'] or '*'
@@ -80,18 +75,8 @@ def main():
                 earliest_date,
             )
             data = ((cat, tat, old_tag, tag, repo_name) for cat, tat, old_tag, tag in gen)
-            if flags['--plot']:
-                plot_release_lead_time_metrics(data)
-            else:
-                write_release_lead_time_csv_file(data)
-    if flags["plot"]:
-        if flags["--open-branches"]:
-            data = read_open_branches_csv_file(flags["<csv_file>"])
-            plot_open_branches_metrics(data)
-        elif flags["--release-lead-time"]:
-            data = read_release_lead_time_csv_file(flags["<csv_file>"])
-            plot_release_lead_time_metrics(data)
-    elif flags["batch"] and flags["--open-branches"]:
+            write_release_lead_time_csv_file(data)
+    if flags["batch"] and flags["--open-branches"]:
         for path_to_git_repo in flags['<path_to_git_repos>']:
             print("checking master branch in repo:", path_to_git_repo, file=sys.stderr)
             run = mk_run(path_to_git_repo)
