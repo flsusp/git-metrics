@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-git clone $1 repo
+git clone "$1" repo
 
-python3 calculate_four_metrics.py lead-time --start-date=$2 --deploy-tag-pattern="deploy-*" repo
+TIMESTAMP=$(date --date="$2 00:00:00" +"%s")
+python3 calculate_four_metrics.py lead-time --start-date="$TIMESTAMP" --deploy-tag-pattern="deploy-*" repo
