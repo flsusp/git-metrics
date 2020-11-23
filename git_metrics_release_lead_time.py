@@ -48,7 +48,6 @@ def date_from_git_objects(run, objects: Iterable[str]) -> List[int]:
 def commit_author_time_tag_author_time_and_from_to_tag_name(run, match_tag, earliest_date=0):
     def match_tag_value(p):
         tag_name, _date = p
-        print(tag_name)
         return match_tag(tag_name)
     filtered_on_tags = fetch_tags_and_author_dates_with_filter(
         run,

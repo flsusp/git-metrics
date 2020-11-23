@@ -21,6 +21,7 @@ import statistics
 import time
 from functools import partial
 import logging
+import numbers
 
 import docopt
 
@@ -53,7 +54,13 @@ def main():
         patch_pattern = flags['--patch-tag-pattern'] or '*'
         if flags["lead-time"]:
             mean_seconds = calculate_lead_time(path_to_git_repo, deploy_pattern, start_date)
-            print(mean_seconds)
+            if isinstance(mean_seconds, numbers.Number):
+                print(f"seconds:{mean_seconds:.0f}")
+                print(f"minutes:{mean_seconds / 60:.0f}")
+                print(f"hours:{mean_seconds / (60 * 60):.0f}")
+                print(f"days:{mean_seconds / (24 * 60 * 60):.0f}")
+            else:
+                print(mean_seconds)
         if flags["deploy-interval"]:
             interval_seconds = calculate_deploy_interval(path_to_git_repo, deploy_pattern, start_date, now)
             print(f"Deploy interval: {interval_seconds:.0f} seconds")
